@@ -12,8 +12,6 @@
  * https://refactoring.guru/es/design-patterns/abstract-factory
  */
 
-import { COLORS } from '../helpers/colors.ts';
-
 /**
  * !Instrucciones:
  	1.Completen las Clases de Productos:
@@ -30,82 +28,3 @@ import { COLORS } from '../helpers/colors.ts';
 	  •	Ejecuten el código para asegurarse de que cada fábrica produce el tipo correcto de vehículo y motor.
 
  */
-// 1. Interfaces de Vehicle y Engine
-interface Vehicle {
-  assemble(): void;
-}
-
-interface Engine {
-  start(): void;
-}
-
-// 2. Clases Concretas de Productos
-
-class ElectricCar implements Vehicle {
-  assemble(): void {
-    console.log('Ensamblando un auto %celéctrico', COLORS.blue);
-  }
-}
-
-class GasCar implements Vehicle {
-  assemble(): void {
-    console.log('Ensamblando un auto de %ccombustión', COLORS.brown);
-  }
-}
-
-class ElectricEngine implements Engine {
-  start(): void {
-    console.log('Arrancando motor %celéctrico', COLORS.blue);
-  }
-}
-
-class GasEngine implements Engine {
-  start(): void {
-    console.log('Arrancando motor de %ccombustión', COLORS.brown);
-  }
-}
-
-// 3. Interfaz de la Fábrica Abstracta
-
-interface VehicleFactory {
-  createVehicle(): Vehicle;
-  createEngine(): Engine;
-}
-
-// 4. Clases Concretas de Fábricas
-class ElectricVehicleFactory implements VehicleFactory {
-  createVehicle(): Vehicle {
-    return new ElectricCar();
-  }
-
-  createEngine(): Engine {
-    return new ElectricEngine();
-  }
-}
-
-class GasVehicleFactory implements VehicleFactory {
-  createVehicle(): Vehicle {
-    return new GasCar();
-  }
-  createEngine(): Engine {
-    return new GasEngine();
-  }
-  // Implementación de los métodos createVehicle y createEngine
-}
-
-// 5. Código Cliente
-
-function main(factory: VehicleFactory) {
-  const vehicle = factory.createVehicle();
-  const engine = factory.createEngine();
-
-  vehicle.assemble();
-  engine.start();
-}
-
-// Pruebas
-console.log('Creando vehículo eléctrico:');
-main(new ElectricVehicleFactory());
-
-console.log('\nCreando vehículo de combustión:');
-main(new GasVehicleFactory());
