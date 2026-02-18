@@ -57,7 +57,7 @@ class QueryBuilder {
   }
 
   orderBy(field: string, direction: 'ASC' | 'DESC' = 'ASC'): QueryBuilder {
-    this.orderFields.push(`order by ${field} ${direction}`);
+    this.orderFields.push(`${field} ${direction}`);
     return this;
   }
 
@@ -68,22 +68,21 @@ class QueryBuilder {
 
   execute(): string {
 
-    const fields = (this.fields.length > 0) ? this.fields.join(', ') : '*';
+    const columns = this.fields.length > 0 ? this.fields.join(', ') : '*';
 
-    const whereClause = 
-      this.conditions.length > 0
-      ? this.conditions.join(' and ')
+    const whereClause = this.conditions.length > 0
+      ? `WHERE ${this.conditions.join(' AND ')}`
       : '';
 
-    const orderByClause = 
-      this.orderBy.length > 0
-      ? this.orderFields.join(', ')
+    const orderByClause = this.orderFields.length > 0
+      ? `ORDER BY ${this.orderFields.join(', ')}`
       : '';
 
-    const limitCount = this.limitCount ? `${this.limitCount}` : ''
+    const limitClause = this.limitCount
+      ? `LIMIT ${this.limitCount}`
+      : '';
 
-
-    return `Select ${fields} from ${this.table} where ${whereClause} ${orderByClause} limit ${limitCount};`
+    return `SELECT ${columns} FROM ${this.table} ${whereClause} ${orderByClause} ${limitClause};`
   }
 }
 
