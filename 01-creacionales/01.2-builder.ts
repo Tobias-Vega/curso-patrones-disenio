@@ -33,3 +33,71 @@
   console.log('Consulta: ', usersQuery);
   // Select id, name, email from users where age > 18 and country = 'Cri' order by name ASC limit 10;
  */
+
+class QueryBuilder {
+  private table: string;
+  private fields: string[] = [];
+  private conditions: string[] = [];
+  private orderFields: string[] = [];
+  private limitCount?: number;
+
+  constructor(table: string) {
+    this.table = table;
+  }
+
+  select(...fields: string[]): QueryBuilder {
+
+    this.fields = fields;
+    return this;
+  }
+
+  where(condition: string): QueryBuilder {
+    this.conditions.push(condition);
+    return this;
+  }
+
+  orderBy(field: string, direction: 'ASC' | 'DESC' = 'ASC'): QueryBuilder {
+    this.orderFields.push(`order by ${field} ${direction}`);
+    return this;
+  }
+
+  limit(count: number): QueryBuilder {
+    this.limitCount = count;
+    return this;
+  }
+
+  execute(): string {
+
+    const fields = (this.fields.length > 0) ? this.fields.join(', ') : '*';
+
+    const whereClause = 
+      this.conditions.length > 0
+      ? this.conditions.join(' and ')
+      : '';
+
+    const orderByClause = 
+      this.orderBy.length > 0
+      ? this.orderFields.join(', ')
+      : '';
+
+    const limitCount = this.limitCount ? `${this.limitCount}` : ''
+
+
+    return `Select ${fields} from ${this.table} where ${whereClause} ${orderByClause} limit ${limitCount};`
+  }
+}
+
+function main() {
+  const usersQuery = new QueryBuilder('users')
+    .select('id', 'name', 'email')
+    .where('age > 18')
+    .where("country = 'Cri'") // Esto debe de hacer una condición AND
+    .orderBy('name', 'ASC')
+    .orderBy('age', 'DESC')
+    .limit(10)
+    .execute();
+
+  console.log(usersQuery);
+}
+
+main();
