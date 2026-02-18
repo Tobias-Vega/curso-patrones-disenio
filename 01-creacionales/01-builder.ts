@@ -24,7 +24,7 @@ class Computer {
       CPU: ${this.cpu}
       RAM: ${this.ram}
       Almacenamiento: ${this.storage}
-      GPU: ${this.gpu}
+      GPU: ${this.gpu ?? 'No tiene GPU'}
       `)
   }
 }
@@ -64,3 +64,27 @@ class ComputerBuilder {
     return this.computer;
   }
 }
+
+function main() {
+
+  const basicComputer = new ComputerBuilder()
+    .setCPU('Intel Core 2 Dúo')
+    .setRAM('4GB')
+    .setStorage('256GB')
+    .build()
+
+  basicComputer.displayConfiguration();
+
+  const gamingComputer = new ComputerBuilder()
+    .setCPU('Intel 9')
+    .setRAM('32G')
+    .setStorage('1TB M2')
+    .setGPU('Nvidia RTX 5090')
+    .build();
+
+  gamingComputer.displayConfiguration();
+
+
+}
+
+main();
