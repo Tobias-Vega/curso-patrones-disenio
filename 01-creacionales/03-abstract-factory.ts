@@ -78,3 +78,20 @@ class HealthyRestaurantFactory implements RestaurantFactory {
     return new Water();
   }
 }
+
+function main(factory: RestaurantFactory) {
+
+  const hamburger = factory.createHamburger();
+  const drink = factory.createDrink();
+
+  hamburger.prepare();
+  drink.pour();
+  
+  
+}
+
+console.log(`\nPedido del menú regular:`)
+main(new FastFoodRestaurantFactory());
+
+console.log(`\nPedido del menú saludable:`)
+main(new HealthyRestaurantFactory());
