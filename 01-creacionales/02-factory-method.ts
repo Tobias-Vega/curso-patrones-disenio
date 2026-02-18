@@ -12,3 +12,52 @@
  * https://refactoring.guru/es/design-patterns/factory-method
  *
  */
+
+interface Hamburger {
+  prepare(): void;
+}
+
+class ChickenHamburger implements Hamburger {
+
+  prepare(): void {
+    console.log('Preparando una hamburguesa de pollo')
+  }
+
+}
+
+class BeefHamburger implements Hamburger {
+
+  prepare(): void {
+    console.log('Preparando una hamburguesa de carne')
+  }
+
+}
+
+abstract class Restaurant {
+  
+  abstract createHamburger(): Hamburger;
+
+  orderHamburger(): void {
+    const hamburger = this.createHamburger();
+    hamburger.prepare();
+  }
+
+}
+
+class ChickenRestaurant extends Restaurant {
+
+  
+  override createHamburger(): Hamburger {
+    return new ChickenHamburger();
+  }
+
+}
+
+class BeefRestaurant extends Restaurant {
+
+  
+  override createHamburger(): Hamburger {
+    return new BeefHamburger();
+  }
+
+}
