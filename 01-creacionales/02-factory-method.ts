@@ -33,8 +33,14 @@ class BeefHamburger implements Hamburger {
 
 }
 
+class BeanHamburger implements Hamburger {
+  prepare(): void {
+    console.log('Preparando una hamburguesa de frijol')
+  }
+}
+
 abstract class Restaurant {
-  
+
   abstract createHamburger(): Hamburger;
 
   orderHamburger(): void {
@@ -46,7 +52,7 @@ abstract class Restaurant {
 
 class ChickenRestaurant extends Restaurant {
 
-  
+
   override createHamburger(): Hamburger {
     return new ChickenHamburger();
   }
@@ -55,9 +61,42 @@ class ChickenRestaurant extends Restaurant {
 
 class BeefRestaurant extends Restaurant {
 
-  
+
   override createHamburger(): Hamburger {
     return new BeefHamburger();
   }
 
 }
+
+class BeanRestaurant extends Restaurant {
+  override createHamburger(): Hamburger {
+    return new BeanHamburger();
+  }
+}
+
+function main() {
+
+  let restaurant: Restaurant;
+
+  const burgerType = prompt('¿Que tipo de hamburguesa quieres? (chicken/beef/bean)');
+
+  switch (burgerType) {
+    case 'chicken':
+      restaurant = new ChickenRestaurant();
+      break;
+    case 'beef':
+      restaurant = new BeefRestaurant();
+      break;
+    case 'bean':
+      restaurant = new BeanRestaurant();
+      break;
+    default:
+      throw new Error('Opción no valida');
+  }
+
+  restaurant.orderHamburger();
+
+
+}
+
+main()
