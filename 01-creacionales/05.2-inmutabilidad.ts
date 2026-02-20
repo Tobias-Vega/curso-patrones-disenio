@@ -14,3 +14,65 @@
  2.	Usen el código cliente para probar el funcionamiento de copyWith, 
  haciendo cambios en el puntaje, nivel y nombre del jugador.
  */
+interface PlayerProps {
+  name: string;
+  score: number;
+  level: number;
+}
+
+// 1. Clase Player inmutable
+class Player {
+  readonly name: string;
+  readonly score: number;
+  readonly level: number;
+
+  constructor({ level, name, score }: PlayerProps) {
+    this.name = name;
+    this.score = score;
+    this.level = level;
+  }
+
+  // Método copyWith para crear una copia modificada del jugador
+  copyWith({ name, score, level }: Partial<Player>): Player {
+    return new Player({
+      level: level ?? this.level,
+      name: name ?? this.name,
+      score: score ?? this.score,
+    });
+  }
+
+  displayState(): void {
+    console.log(`\nJugador: ${this.name}`);
+    console.log(`cPuntaje: ${this.score}`);
+    console.log(`cNivel: ${this.level}`);
+  }
+}
+
+// 2. Código Cliente para probar
+function main() {
+  // Crear jugador inicial
+  let player = new Player({
+    level: 1,
+    name: 'Carlos',
+    score: 0,
+  });
+  console.log('Estado inicial:');
+  player.displayState();
+
+  // Incrementar el puntaje
+  player = player.copyWith({ score: 10 });
+  console.log('\nDespués de incrementar el puntaje:');
+  player.displayState();
+
+  // Subir de nivel
+  player = player.copyWith({ level: 2 });
+  console.log('\nDespués de subir de nivel:');
+  player.displayState();
+
+  // Cambiar el nombre del jugador
+  player = player.copyWith({ name: 'Carlos Pro' });
+  console.log('\nDespués de cambiar el nombre:');
+  player.displayState();
+}
+
+main();
