@@ -32,7 +32,7 @@ class DragonBalls {
   collectBall(): void {
     if (this.ballsCollected < 7) {
       this.ballsCollected++;
-      console.log(`Esfera recolectado. Total de esferas: ${this.ballsCollected}`);
+      console.log(`Esfera recolectada. Total de esferas: ${this.ballsCollected}`);
       return;
     }
 
@@ -46,8 +46,30 @@ class DragonBalls {
       return;
     }
 
-    console.log(`Aún faltan ${7 -this.ballsCollected} esferas para invocar a Shenlong`)
+    console.log(`Aún faltan ${7 - this.ballsCollected} esferas para invocar a Shenlong`)
   }
 
 }
 
+function main() {
+
+  const gokuDragonBalls = DragonBalls.getInstance();
+
+  gokuDragonBalls.collectBall();
+  gokuDragonBalls.collectBall();
+  gokuDragonBalls.collectBall();
+
+
+  gokuDragonBalls.summonShenlong();
+
+  const vegetaDragonBalls = DragonBalls.getInstance();
+  vegetaDragonBalls.collectBall();
+  vegetaDragonBalls.collectBall();
+  vegetaDragonBalls.collectBall();
+  vegetaDragonBalls.collectBall();
+
+  gokuDragonBalls.summonShenlong();
+
+  vegetaDragonBalls.summonShenlong();
+}
+main();
