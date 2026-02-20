@@ -25,3 +25,18 @@ function createGreeeter(lang: Language) {
 
   }
 }
+
+function main() {
+
+  const spanishGreeter = createGreeeter('es');
+  const englishGreeter = createGreeeter('en');
+  const frenchGreeter = createGreeeter('fr');
+
+  spanishGreeter('Tobías');
+  englishGreeter('Alice');
+  frenchGreeter('Pierre');
+
+
+}
+
+main();
